@@ -9,3 +9,65 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id       Int         @id @default(autoincrement())
+  email    String      @unique
+  username String
+  phone    String
+  avatar   Attachment? @relation(fields: [avatarId], references: [id])
+  avatarId Int?
+  listings Listings[]
+  category ListingCategory
+  sqfeet Float
+  createdat DateTime @default(now())
+  updatedat DateTime @updatedAt
+}
+
+model Address {
+  id Int @id @default(autoincrement())
+  latitude Float
+  longitude Float
+  address String
+  createdat DateTime @default(now())
+  updatedat DateTime @updatedAt
+  
+}
+model Listings {
+  id Int @id @default(autoincrement())
+  owner User @relation(fields: [id],references: [id])
+  ownerId Int
+}
+
+model Attachment {
+  id     Int    @id @default(autoincrement())
+  userId Int
+  User   User[]
+}
+
+model Transactions {
+  id Int @id @default(autoincrement())
+}
+model Notification {
+  id Int @id @default(autoincrement())
+}
+model Ratings {
+  id Int @id @default(autoincrement())
+  rating Float
+  title String
+  review String
+}
+enum ListingCategory {
+  ONE_BEDROOM
+  TWO_BEDROOM
+  THREE_BEDROOM
+  FOUR_BEDROOM
+  FIVE_BEDROOM
+  SINGLE_ROOM
+  BEDSITTER
+}
+enum UserRole {
+  CUSTOMER
+  ADMIN
+  AGENT
+}
