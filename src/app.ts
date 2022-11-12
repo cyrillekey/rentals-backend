@@ -17,6 +17,14 @@ const app: FastifyPluginAsync<AppOptions> = async (
   // This loads all plugins defined in plugins
   // those should be support plugins that are reused
   // through your application
+  void fastify.register(require('@fastify/cors'))
+  void fastify.register(require('@fastify/jwt'),{
+    secret:'supersecret'
+  })
+  void fastify.register(require('@fastify/swagger'))
+  
+  
+
   void fastify.register(AutoLoad, {
     dir: join(__dirname, 'plugins'),
     options: opts
