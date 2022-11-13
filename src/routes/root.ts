@@ -5,7 +5,6 @@ const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
     method: 'POST',
     url: '/signup',
     handler: (request,reply)=>{
-    
       reply.send({})
     } 
   })
